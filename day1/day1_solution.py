@@ -1,25 +1,13 @@
 from itertools import combinations
 
-def find_pair_given_sum(l, expected_sum):
+def find_combination_given_sum(l, length, expected_sum):
     """
-      Finds in a list a pair of values for which the sum is equal to
-      "expected_sum". Returns the first pair found (in ascending order of
-      indexes), or None if none is found
+      Finds in a list a combination of values of length "length" for which the
+      sum is equal to "expected_sum". Returns the first combination found (in
+      ascending order of indexes), or None if none is found
     """
-    if len(l) > 0:
-        for combination in combinations(l, 2):
-            if sum(combination) == expected_sum:
-                return combination
-    return None
-
-
-def find_trio_given_sum(l, expected_sum):
-    """
-      Finds in a list a trio of indexes for which the sum of values is sum
-      returns the first trio found (in ascending order), or None if none is found
-    """
-    if len(l) > 1:
-        for combination in combinations(l, 3):
+    if len(l) >= length:
+        for combination in combinations(l, length):
             if sum(combination) == expected_sum:
                 return combination
     return None
@@ -43,7 +31,7 @@ def print_solution(solution, problem):
 
 if __name__ == '__main__':
     l = read_input("./input.txt")
-    sol1a = find_pair_given_sum(l, 2020)
+    sol1a = find_combination_given_sum(l, 2, 2020)
     print_solution(sol1a, "1A")
-    sol2a = find_trio_given_sum(l, 2020)
+    sol2a = find_combination_given_sum(l, 3, 2020)
     print_solution(sol2a, "2A")
