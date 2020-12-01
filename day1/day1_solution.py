@@ -19,11 +19,9 @@ def find_trio_given_sum(l, expected_sum):
       returns the first trio found (in ascending order), or None if none is found
     """
     if len(l) > 1:
-        for i, x in enumerate(l[:-1]):
-            for j, y in enumerate(l[i + 1:]):
-                for k, z in enumerate(l[i + j + 2:]):
-                    if x + y + z == expected_sum:
-                        return (i, j + i + 1, k + j + i + 2)
+        for combination in combinations(l, 3):
+            if sum(combination) == expected_sum:
+                return combination
     return None
 
 def read_input(path):
@@ -45,15 +43,7 @@ def print_solution(solution, problem):
 
 if __name__ == '__main__':
     l = read_input("./input.txt")
-    print(len(l))
     sol1a = find_pair_given_sum(l, 2020)
     print_solution(sol1a, "1A")
-    i, j, k = find_trio_given_sum(l, 2020)
-    print()
-    print(
-        f'Solution 1b:\n'
-        f'------------\n'
-        f'The product of {l[i]} (index {i}) and {l[j]} (index {j}) and '
-        f'{l[k]} (index {k}) gives '
-        f'{l[i] * l[j] * l[k]}'
-    )
+    sol2a = find_trio_given_sum(l, 2020)
+    print_solution(sol2a, "2A")
