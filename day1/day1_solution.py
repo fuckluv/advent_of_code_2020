@@ -13,9 +13,8 @@ def find_combination_given_sum(l, length, expected_sum):
     return None
 
 def read_input(path):
-    file = open(path)
-    input = [int(i) for i in file.read().splitlines()]
-    file.close()
+    with open(path) as f:
+        input = [int(line) for line in f]
     return(input)
 
 def print_solution(solution, problem):
