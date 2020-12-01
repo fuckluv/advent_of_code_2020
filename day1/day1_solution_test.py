@@ -6,7 +6,7 @@ class TestPairGivenSum(unittest.TestCase):
     def test_values(self):
         self.assertEqual(
            find_pair_given_sum([1721, 979, 366, 299, 675, 1456], 2020),
-           (0, 3)
+           (1721, 299)
         )
         self.assertIsNone(find_pair_given_sum([1010], 2020))
         self.assertIsNone(find_pair_given_sum([0, 0, 0], 2020))

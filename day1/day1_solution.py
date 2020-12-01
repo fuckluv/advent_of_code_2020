@@ -1,14 +1,15 @@
+from itertools import combinations
+
 def find_pair_given_sum(l, expected_sum):
     """
-      Finds in a list a pair of indexes for which the sum of values is sum
-      returns the first pair found (in ascending order), or None if none is
-      found
+      Finds in a list a pair of values for which the sum is equal to
+      "expected_sum". Returns the first pair found (in ascending order of
+      indexes), or None if none is found
     """
     if len(l) > 0:
-        for i, x in enumerate(l[:-1]):
-            for j, y in enumerate(l[i + 1:]):
-                if x + y == expected_sum:
-                    return (i, j + i + 1)
+        for combination in combinations(l, 2):
+            if sum(combination) == expected_sum:
+                return combination
     return None
 
 
@@ -31,16 +32,22 @@ def read_input(path):
     file.close()
     return(input)
 
+def print_solution(solution, problem):
+    product = 1
+    for s in solution:
+        product *= s
+    print(
+        f'Solution {problem}\n'
+        f'------------\n'
+        f'Sum of {solution} is {sum(solution)}\n'
+        f'Product of {solution} is {product}'
+    )
+
 if __name__ == '__main__':
     l = read_input("./input.txt")
     print(len(l))
-    i, j = find_pair_given_sum(l, 2020)
-    print(
-        f'Solution 1a:\n'
-        f'------------\n'
-        f'The product of {l[i]} (index {i}) and {l[j]} (index {j})'
-        f'gives {l[i] * l[j]}'
-    )
+    sol1a = find_pair_given_sum(l, 2020)
+    print_solution(sol1a, "1A")
     i, j, k = find_trio_given_sum(l, 2020)
     print()
     print(
