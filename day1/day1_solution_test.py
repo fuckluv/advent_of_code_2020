@@ -1,5 +1,5 @@
 import unittest
-from day1_solution import find_pair_given_sum
+from day1_solution import *
 
 class TestPairGivenSum(unittest.TestCase):
 
