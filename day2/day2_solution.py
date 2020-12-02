@@ -10,14 +10,18 @@ def read_input(path):
     )
     return df_input
 
-def is_policy_compliantA(pw_dict):
-    n = pw_dict["password"].count(pw_dict["char"])
-    return n >= pw_dict["min_char"] and n <= pw_dict["max_char"]
+def is_policy_compliantA(pw_df):
+    def is_compliant_dict(x):
+        n = x["password"].count(x["char"])
+        return n >= x["min_char"] and n <= x["max_char"]
+    return pw_df.apply(is_compliant_dict, axis = 1)
 
-def is_policy_compliantB(pw_dict):
-    letters = [pw_dict["password"][i - 1] \
-            for i in (pw_dict["min_char"], pw_dict["max_char"])]
-    return operator.xor(*(l == pw_dict["char"] for l in letters))
+def is_policy_compliantB(pw_df):
+    def is_compliant_dict(x):
+        letters = [x["password"][i - 1] \
+            for i in (x["min_char"], x["max_char"])]
+        return operator.xor(*(l == x["char"] for l in letters))
+    return pw_df.apply(is_compliant_dict, axis = 1)
 
 def print_solution(compliance, problem):
     print(
@@ -29,9 +33,9 @@ def print_solution(compliance, problem):
 
 if __name__ == "__main__":
     input_df = read_input("input.txt")
-    complianceA = input_df.apply(is_policy_compliantA, axis = 1)
+    complianceA = is_policy_compliantA(input_df)
     print_solution(complianceA, "2A")
 
     print()
-    complianceB = input_df.apply(is_policy_compliantB, axis = 1)
+    complianceB = is_policy_compliantB(input_df)
     print_solution(complianceB, "2B")
