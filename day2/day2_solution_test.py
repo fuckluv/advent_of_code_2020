@@ -21,14 +21,14 @@ class TestReadInput(unittest.TestCase):
 class TestInputPolicyA(unittest.TestCase):
 
     def test_input_policyA(self):
-        actual = get_test_df().apply(is_policy_compliantA, axis = 1).values
+        actual = is_policy_compliantA(get_test_df()).values
         expected = [True, False, True]
         self.assertTrue((actual == expected).all())
 
 class TestInputPolicyB(unittest.TestCase):
 
     def test_input_policyB(self):
-        actual = get_test_df().apply(is_policy_compliantB, axis = 1).values
+        actual = is_policy_compliantB(get_test_df()).values
         expected = [True, False, False]
         self.assertTrue((actual == expected).all())
 
