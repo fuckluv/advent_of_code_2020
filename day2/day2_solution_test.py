@@ -1,6 +1,6 @@
 import unittest
 import pandas as pd
-from day2_solution import read_input, is_policy_compliantA
+from day2_solution import *
 
 def get_test_df():
     return pd.DataFrame({
