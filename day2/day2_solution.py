@@ -9,7 +9,7 @@ def read_input(path):
     )
     return df_input
 
-def is_policy_compliant(pw_dict):
+def is_policy_compliantA(pw_dict):
     n = pw_dict["password"].count(pw_dict["char"])
     return n >= pw_dict["min_char"] and n <= pw_dict["max_char"]
 
@@ -23,10 +23,5 @@ def print_solution(compliance, problem):
 
 if __name__ == "__main__":
     input_df = read_input("input.txt")
-    compliance = input_df.apply(is_policy_compliant, axis = 1)
-    print_solution(compliance, "2A")
-
-
-
-
-
+    complianceA = input_df.apply(is_policy_compliantA, axis = 1)
+    print_solution(complianceA, "2A")

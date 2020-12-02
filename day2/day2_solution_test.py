@@ -1,6 +1,6 @@
 import unittest
 import pandas as pd
-from day2_solution import read_input, is_policy_compliant
+from day2_solution import read_input, is_policy_compliantA
 
 def get_test_df():
     return pd.DataFrame({
@@ -18,10 +18,10 @@ class TestReadInput(unittest.TestCase):
         self.assertTrue((test_input.columns == expected.columns).all())
         self.assertTrue((test_input.values == expected.values).all())
 
-class TestInputPolicy(unittest.TestCase):
+class TestInputPolicyA(unittest.TestCase):
 
-    def test_input_policy(self):
-        actual = get_test_df().apply(is_policy_compliant, axis = 1).values
+    def test_input_policyA(self):
+        actual = get_test_df().apply(is_policy_compliantA, axis = 1).values
         expected = [True, False, True]
         self.assertTrue((actual == expected).all())
 
