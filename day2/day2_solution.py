@@ -19,7 +19,7 @@ def is_policy_compliantA(password_df):
     """
     def is_compliant_dict(x):
         n = x["password"].count(x["char"])
-        return n >= x["min_char"] and n <= x["max_char"]
+        return x["min_char"] <= n <= x["max_char"]
     return password_df.apply(is_compliant_dict, axis = 1)
 
 def is_policy_compliantB(password_df):
