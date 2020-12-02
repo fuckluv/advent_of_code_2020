@@ -25,5 +25,12 @@ class TestInputPolicyA(unittest.TestCase):
         expected = [True, False, True]
         self.assertTrue((actual == expected).all())
 
+class TestInputPolicyB(unittest.TestCase):
+
+    def test_input_policyB(self):
+        actual = get_test_df().apply(is_policy_compliantB, axis = 1).values
+        expected = [True, False, False]
+        self.assertTrue((actual == expected).all())
+
 if __name__ == '__main__':
     unittest.main()
