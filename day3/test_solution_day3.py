@@ -10,6 +10,12 @@ class TestParseForest(unittest.TestCase):
         self.assertTrue(type(input_arr) is np.ndarray)
         self.assertTrue((input_arr == expected_arr).all())
 
+class TestReadForest(unittest.TestCase):
+
+    def testInput(self):
+        input_arr = read_forest("./test_input.txt")
+        self.assertEqual(input_arr.shape, [11, 11])
+
 if __name__ == "__main__":
     # importlib.reload(solution_day3)
     unittest.main()
