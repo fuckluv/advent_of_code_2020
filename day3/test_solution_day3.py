@@ -23,42 +23,46 @@ class TestReadForest(unittest.TestCase):
 
 class TestIsATree(unittest.TestCase):
 
-    def test_is_a_tree(self):
+    def test_are_trees(self):
         input_arr = get_test_input_small()
-        self.assertEqual(is_a_tree(input_arr, [(0, 0)]), [False])
-        self.assertEqual(is_a_tree(input_arr, [(0, 1)]), [True])
+        self.assertEqual(are_trees(input_arr, []), [])
+        self.assertEqual(are_trees(input_arr, [(0, 0)]), [False])
+        self.assertEqual(are_trees(input_arr, [(0, 1)]), [True])
         self.assertTrue(
-            all(is_a_tree(input_arr, [(2, 0), (2, 1)]))
+            all(are_trees(input_arr, [(2, 0), (2, 1)]))
         )
 
     def test_recycle_forest_left(self):
         input_arr = get_test_input_small()
-        self.assertEqual(is_a_tree(input_arr, [(0, -1)]), [False])
-        self.assertEqual(is_a_tree(input_arr, [(0, -2)]), [True])
-        self.assertEqual(is_a_tree(input_arr, [(1, -4)]), [True])
-        self.assertEqual(is_a_tree(input_arr, [(1, -5)]), [False])
-        self.assertTrue(all(is_a_tree(input_arr, [(0, -2), (1, -4)])))
+        self.assertEqual(are_trees(input_arr, [(0, -1)]), [False])
+        self.assertEqual(are_trees(input_arr, [(0, -2)]), [True])
+        self.assertEqual(are_trees(input_arr, [(1, -4)]), [True])
+        self.assertEqual(are_trees(input_arr, [(1, -5)]), [False])
+        self.assertTrue(all(are_trees(input_arr, [(0, -2), (1, -4)])))
 
     def test_recycle_forest_left(self):
         input_arr = get_test_input_small()
-        self.assertEqual(is_a_tree(input_arr, [(0, 5)]), [False])
-        self.assertEqual(is_a_tree(input_arr, [(0, 4)]), [True])
-        self.assertEqual(is_a_tree(input_arr, [(1, 8)]), [True])
-        self.assertEqual(is_a_tree(input_arr, [(1, 7)]), [False])
-        self.assertTrue(all(is_a_tree(input_arr, [(0, 4), (1, 8)])))
+        self.assertEqual(are_trees(input_arr, [(0, 5)]), [False])
+        self.assertEqual(are_trees(input_arr, [(0, 4)]), [True])
+        self.assertEqual(are_trees(input_arr, [(1, 8)]), [True])
+        self.assertEqual(are_trees(input_arr, [(1, 7)]), [False])
+        self.assertTrue(all(are_trees(input_arr, [(0, 4), (1, 8)])))
 
     def test_value(self):
         input_arr = get_test_input_small()
         with self.assertRaises(ValueError):
-            is_a_tree(input_arr, [(-1, 0)])
+            are_trees(input_arr, [(-1, 0)])
         with self.assertRaises(ValueError):
-            is_a_tree(input_arr, [(3, 0)])
+            are_trees(input_arr, [(3, 0)])
         with self.assertRaises(ValueError):
-            is_a_tree(input_arr, [(0, 1), (3, 0)])
+            are_trees(input_arr, [(0, 1), (3, 0)])
         with self.assertRaises(ValueError):
-            is_a_tree(input_arr, [(-1, -1), (0, 0)])
-        with self.assertRaises(ValueError):
-            is_a_tree(input_arr, (-1, -1))
+            are_trees(input_arr, [(-1, -1), (0, 0)])
+
+    def test_type(self):
+        input_arr = get_test_input_small()
+        with self.assertRaises(TypeError):
+            are_trees(input_arr, (-1, -1))
 
 class TestTreeCount(unittest.TestCase):
 

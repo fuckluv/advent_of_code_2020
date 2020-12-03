@@ -16,28 +16,27 @@ def parse_forest(lines):
         return [int(d) for d in line.translate(tr)]
     return np.array([convert_line_to_int(l) for l in lines])
 
-def is_a_tree(forest, coords):
+def are_trees(forest, coords):
     """
     Check if "coords"  coordinates are trees (list of tuples, first element is
     row, second is column, both 0 indexed) in "forest".
     Returns a list of `bool` of same length as "coords".
     """
-    if type(coords) is not list:
-        raise ValueError
-    if len(coords) == 0:
-        raise ValueError
-    (forest_depth, forest_width) = forest.shape
-    if any([not 0 <= r < forest_depth for r, _ in coords]):
-        raise ValueError
-    is_a_tree = [forest[r, c % forest_width] == 1 for r, c in coords]
-    return is_a_tree
+    def is_a_tree(forest, coord):
+        r, c = coord
+        (forest_depth, forest_width) = forest.shape
+        if not 0 <= r < forest_depth:
+            raise ValueError
+        return forest[r, c % forest_width]
+    trees = [is_a_tree(forest, c) for c in coords]
+    return trees
 
 def count_trees_on_way(direction, forest):
     """ Counts trees on way with "direction" a tuple (x, y) """
     max_steps = int(forest.shape[0] / direction[0])
-    coords = [(direction[0] * step, direction[1] * step) \
-        for step in range(max_steps)]
-    return sum(is_a_tree(forest, coords))
+    coords = ((direction[0] * step, direction[1] * step) \
+        for step in range(max_steps))
+    return sum(are_trees(forest, coords))
 
 if __name__ == "__main__":
     forest = read_forest("./input.txt")
