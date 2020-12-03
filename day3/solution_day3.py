@@ -7,7 +7,10 @@ def read_forest(path):
         return(forest)
 
 def parse_forest(lines):
-    """ Parses a forest from a list of row strings """
+    """
+    Parses a forest from a list of row strings into numpy.array of 0s and 1s
+    (1 if there is a tree)
+    """
     def convert_line_to_int(line):
         tr = str.maketrans(".#", "01")
         return [int(d) for d in line.translate(tr)]
@@ -15,8 +18,9 @@ def parse_forest(lines):
 
 def is_a_tree(forest, coords):
     """
-    Check if coords  coordinates (list of tuples), first element is
-    row, second is column, both 0 indexed) in forest is a tree
+    Check if "coords"  coordinates are trees (list of tuples, first element is
+    row, second is column, both 0 indexed) in "forest".
+    Returns a list of `bool` of same length as "coords".
     """
     if type(coords) is not list:
         raise ValueError
