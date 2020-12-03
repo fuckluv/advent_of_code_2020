@@ -1,6 +1,5 @@
 import unittest
 from solution_day3 import *
-import importlib
 
 class TestParseForest(unittest.TestCase):
 
@@ -14,8 +13,7 @@ class TestReadForest(unittest.TestCase):
 
     def testInput(self):
         input_arr = read_forest("./test_input.txt")
-        self.assertEqual(input_arr.shape, [11, 11])
+        self.assertEqual(input_arr.shape, (11, 11))
 
 if __name__ == "__main__":
-    # importlib.reload(solution_day3)
     unittest.main()

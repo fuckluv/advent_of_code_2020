@@ -2,7 +2,9 @@ import numpy as np
 
 def read_forest(path):
     """ Reads a forest map at "path" """
-    pass
+    with open(path) as f:
+        forest = parse_forest(l.strip() for l in f)
+        return(forest)
 
 def parse_forest(lines):
     """ Parses a forest from a list of row strings """
