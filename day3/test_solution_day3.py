@@ -54,5 +54,15 @@ class TestIsATree(unittest.TestCase):
         with self.assertRaises(ValueError):
             is_a_tree(input_arr, (-1, -1))
 
+class TestTreeCount(unittest.TestCase):
+
+    def test_count_trees(self):
+        forest = parse_forest([".#.","..#", "###"])
+        self.assertEqual(count_trees_on_way((1, 1), forest), 1)
+        self.assertEqual(count_trees_on_way((1, -1), forest), 2)
+        self.assertEqual(count_trees_on_way((1, 2), forest), 2)
+        forest2 = read_forest("./test_input.txt")
+        self.assertEqual(count_trees_on_way((1, 3), forest2), 7)
+
 if __name__ == "__main__":
     unittest.main()
