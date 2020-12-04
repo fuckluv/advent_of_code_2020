@@ -42,9 +42,6 @@ def  is_between(passes, field, min, max):
     return  pd.to_numeric(passes[field], errors = "coerce").ge(min) &\
             pd.to_numeric(passes[field], errors = "coerce").le(max)
 
-def valid_hgt(hgt):
-    cm_or_in
-
 def are_valid_passes_1B(p):
     p["valid_1A"] = are_valid_passes_1A(p)
     p["valid_byr"] = is_between(p, "byr", 1920, 2002)
