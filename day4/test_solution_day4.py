@@ -2,7 +2,7 @@ import unittest
 from numpy import nan
 import pandas as pd
 from solution_day4 import (split_pass_batch, parse_pass, read_pass_batch,
-        are_valid_passes_1A, are_valid_passes_1B)
+        are_valid_passes_A, are_valid_passes_B)
 
 class TestSplitPassBatch(unittest.TestCase):
 
@@ -49,14 +49,14 @@ class TestReadBatch(unittest.TestCase):
 class TestValidPass(unittest.TestCase):
 
     def test_valid_pass(self):
-        valid_passes_1A = pd.DataFrame([
+        valid_passes_A = pd.DataFrame([
             ["1937", "2017", "2020", "18", "#ff", "g", "8", "1"],
             ["1937", "2017", "2020", "18", "#ff", "g", "8", nan]
             ],
             columns = ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid",
                 "cid"))
 
-        invalid_passes_1A = pd.DataFrame([
+        invalid_passes_A = pd.DataFrame([
             [nan, "2017", "2020", "18", "#ff", "g", "8", "1"],
             ["1937", nan, "2020", "18", "#ff", "g", "8", "1"],
             ["1937", "2017", nan, "18", "#ff", "g", "8", "1"],
@@ -67,14 +67,14 @@ class TestValidPass(unittest.TestCase):
             ],
             columns = ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid",
                 "cid"))
-        self.assertTrue(are_valid_passes_1A(valid_passes_1A).all())
-        self.assertFalse(are_valid_passes_1A(invalid_passes_1A).any())
+        self.assertTrue(are_valid_passes_A(valid_passes_A).all())
+        self.assertFalse(are_valid_passes_A(invalid_passes_A).any())
 
-        valid_passes_1B = read_pass_batch("./sample_valid.txt")
-        invalid_passes_1B = read_pass_batch("./sample_invalid.txt")
+        valid_passes_B = read_pass_batch("./sample_valid_B.txt")
+        invalid_passes_B = read_pass_batch("./sample_invalid_B.txt")
 
-        self.assertTrue(are_valid_passes_1B(valid_passes_1B).all())
-        self.assertFalse(are_valid_passes_1B(invalid_passes_1B).any())
+        self.assertTrue(are_valid_passes_B(valid_passes_B).all())
+        self.assertFalse(are_valid_passes_B(invalid_passes_B).any())
 
 
 if __name__ == "__main__":

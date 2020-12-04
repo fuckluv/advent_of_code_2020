@@ -33,7 +33,7 @@ def read_pass_batch(path):
                 for p in split_pass_batch(f.read())])
         return pass_df
 
-def are_valid_passes_1A(passes):
+def are_valid_passes_A(passes):
     """Checks if a passes (`pd.DataFrame`) is valid or not"""
     compulsary_fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
     return ~ passes[compulsary_fields].isnull().any(axis = 1)
@@ -42,8 +42,8 @@ def  is_between(passes, field, min, max):
     return  pd.to_numeric(passes[field], errors = "coerce").ge(min) &\
             pd.to_numeric(passes[field], errors = "coerce").le(max)
 
-def are_valid_passes_1B(p):
-    p["valid_1A"] = are_valid_passes_1A(p)
+def are_valid_passes_B(p):
+    p["valid_A"] = are_valid_passes_A(p)
     p["valid_byr"] = is_between(p, "byr", 1920, 2002)
     p["valid_iyr"] = is_between(p, "iyr", 2010, 2020)
     p["valid_eyr"] = is_between(p, "eyr", 2020, 2030)
@@ -52,7 +52,7 @@ def are_valid_passes_1B(p):
     p["valid_hgt"] =  \
             (p["hgt_unit"].eq("cm") & is_between(p, "hgt_msr", 150, 193)) | \
             (p["hgt_unit"].eq("in") & is_between(p, "hgt_msr", 59, 76))
-    p["valid_hcl"] = p["hcl"].str.match("#[a-f0-9]{6}")
+    p["valid_hcl"] = p["hcl"].str.match("^#[a-f0-9]{6}$")
     p["valid_ecl"] = p["ecl"].isin( \
             ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"])
     p["valid_pid"] = p["pid"].str.match("^\d{9}$")
@@ -60,13 +60,13 @@ def are_valid_passes_1B(p):
 
 if __name__ == "__main__":
     passes = read_pass_batch("./input.txt")
-    solution_4A = sum(are_valid_passes_1A(passes))
+    solution_4A = sum(are_valid_passes_A(passes))
     print(
             f'Solution 4A:\n'
             f'------------\n'
             f'{solution_4A} valid passes out of {passes.shape[0]}'
             )
-    solution_4B = sum(are_valid_passes_1B(passes))
+    solution_4B = sum(are_valid_passes_B(passes))
     print()
     print(
             f'Solution 4B:\n'
