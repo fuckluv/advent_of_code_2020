@@ -1,7 +1,7 @@
 import unittest
 from numpy import nan
 import pandas as pd
-from solution_day4 import (split_pass_batch, parse_pass, read_pass_batch,
+from solution_day4 import (split_batch, parse_pass, read_pass_batch,
         are_valid_passes_A, are_valid_passes_B)
 
 class TestSplitPassBatch(unittest.TestCase):
@@ -18,7 +18,7 @@ class TestSplitPassBatch(unittest.TestCase):
         "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm",
         "iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884 hcl:#cfa07d byr:1929"
         ]
-        actual = [l for l in split_pass_batch(test_pass_batch)]
+        actual = [l for l in split_batch(test_pass_batch)]
         self.assertEqual(actual, expected)
 
 class TestParsePass(unittest.TestCase):
