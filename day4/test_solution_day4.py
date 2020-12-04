@@ -1,9 +1,12 @@
 import unittest
-from solution_day4 import parse_pass_batch, read_pass_batch, is_valid_pass
+from numpy import nan
+import pandas as pd
+from solution_day4 import (split_pass_batch, parse_pass, read_pass_batch,
+        are_valid_passes_1A, are_valid_passes_1B)
 
-class TestParsePassBatch(unittest.TestCase):
+class TestSplitPassBatch(unittest.TestCase):
 
-    def test_parse_pass_batch(self):
+    def test_split_pass_batch(self):
         test_pass_batch = (
         "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd" "\n"
         "byr:1937 iyr:2017 cid:147 hgt:183cm" "\n"
@@ -15,34 +18,64 @@ class TestParsePassBatch(unittest.TestCase):
         "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm",
         "iyr:2013 ecl:amb cid:350 eyr:2023 pid:028048884 hcl:#cfa07d byr:1929"
         ]
-        actual = [l for l in parse_pass_batch(test_pass_batch)]
+        actual = [l for l in split_pass_batch(test_pass_batch)]
         self.assertEqual(actual, expected)
+
+class TestParsePass(unittest.TestCase):
+
+    def test_parse_pass(self):
+        test_pass1 = "ecl:gry pid:860033327 eyr:2020 hcl:#fffffd byr:1937 iyr:2017 cid:147 hgt:183cm"
+        expected1 = {
+            "ecl":"gry",
+            "pid":"860033327",
+            "eyr":"2020",
+            "hcl":"#fffffd",
+            "byr":"1937",
+            "iyr":"2017",
+            "cid":"147",
+            "hgt":"183cm"
+        }
+        test_pass2 = "iyr:2013 ecl:amb"
+        expected2 = {"iyr":"2013", "ecl":"amb"}
+        self.assertEqual(parse_pass(test_pass1), expected1)
+        self.assertEqual(parse_pass(test_pass2), expected2)
 
 class TestReadBatch(unittest.TestCase):
 
     def test_read_batch(self):
-        actual = [l for l in read_pass_batch("./test_input.txt")]
-        self.assertEqual(len(actual), 251)
+        actual = read_pass_batch("./test_input.txt")
+        self.assertEqual(actual.shape[0], 251)
 
 class TestValidPass(unittest.TestCase):
 
     def test_valid_pass(self):
-        valid_passes = [
-                "ecl:g pid:8 eyr:2020 hcl:#ff byr:1937 iyr:2017 cid:1 hgt:18",
-                "ecl:g pid:8 eyr:2020 hcl:#ff byr:1937 iyr:2017 hgt:18"
- ]
-        invalid_passes = [
-                "",
-                "pid:8 eyr:2020 hcl:#ff byr:1937 iyr:2017 cid:1 hgt:18",
-                "ecl:g eyr:2020 hcl:#ff byr:1937 iyr:2017 cid:1 hgt:18",
-                "ecl:g pid:8 hcl:#ff byr:1937 iyr:2017 cid:1 hgt:18",
-                "ecl:g pid:8 eyr:2020 byr:1937 cid:1 hgt:18",
-                "ecl:g pid:8 eyr:2020 hcl:#ff byr:1937 iyr:2017 cid:1"
-                ]
-        for p in valid_passes:
-            self.assertTrue(is_valid_pass(p))
-        for p in invalid_passes:
-            self.assertFalse(is_valid_pass(p))
+        valid_passes_1A = pd.DataFrame([
+            ["1937", "2017", "2020", "18", "#ff", "g", "8", "1"],
+            ["1937", "2017", "2020", "18", "#ff", "g", "8", nan]
+            ],
+            columns = ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid",
+                "cid"))
+
+        invalid_passes_1A = pd.DataFrame([
+            [nan, "2017", "2020", "18", "#ff", "g", "8", "1"],
+            ["1937", nan, "2020", "18", "#ff", "g", "8", "1"],
+            ["1937", "2017", nan, "18", "#ff", "g", "8", "1"],
+            ["1937", "2017", "2020", nan, "#ff", "g", "8", "1"],
+            ["1937", "2017", "2020", "18", nan, "g", "8", "1"],
+            ["1937", "2017", "2020", "18", "#ff", nan, "8", "1"],
+            ["1937", "2017", "2020", "18", "#ff", "g", nan, "1"]
+            ],
+            columns = ("byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid",
+                "cid"))
+        self.assertTrue(are_valid_passes_1A(valid_passes_1A).all())
+        self.assertFalse(are_valid_passes_1A(invalid_passes_1A).any())
+
+        valid_passes_1B = read_pass_batch("./sample_valid.txt")
+        invalid_passes_1B = read_pass_batch("./sample_invalid.txt")
+
+        self.assertTrue(are_valid_passes_1B(valid_passes_1B).all())
+        self.assertFalse(are_valid_passes_1B(invalid_passes_1B).any())
+
 
 if __name__ == "__main__":
     unittest.main()
