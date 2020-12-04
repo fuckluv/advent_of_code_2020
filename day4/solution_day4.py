@@ -58,7 +58,7 @@ def are_valid_passes_1B(p):
     p["valid_hcl"] = p["hcl"].str.match("#[a-f0-9]{6}")
     p["valid_ecl"] = p["ecl"].isin( \
             ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"])
-    p["valid_pid"] = p["pid"].str.match("\d{9}")
+    p["valid_pid"] = p["pid"].str.match("^\d{9}$")
     return p.loc[:, p.columns.str.startswith("valid")].all(axis = 1)
 
 if __name__ == "__main__":
