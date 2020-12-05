@@ -7,6 +7,6 @@ class TestDecodeSeatId(unittest.TestCase):
 
     def test_decode_seat_id(self):
         seats = ["BFFFBBFRRR", "FFFBBBFRRR", "BBFFBBFRLL"]
-        expected_ids = [657, 119, 820]
+        expected_ids = [567, 119, 820]
         actual_ids = [decode_seat_id(s) for s in seats]
-        self.assertTrue(all(expected_ids == actual_ids))
+        self.assertTrue(expected_ids == actual_ids)
